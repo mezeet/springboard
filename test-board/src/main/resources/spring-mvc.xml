@@ -19,9 +19,10 @@
 	<mvc:default-servlet-handler />
 
 	<!-- 	jsp 뷰 요청하면 앞에 /WEB-INF/view/ 를 붙여서 요청한다. -->
+	<!--  tiles 3.0 리졸버 설정 때문에 이 설정은 없앤다.-->
 	<!-- 	즉, 나는 jsp 파일이름만 넣으면 webapps/WEB-INF/view/이름.jsp 로 조립 -->
-	<mvc:view-resolvers>
-		<mvc:jsp prefix="/WEB-INF/view/" />
-	</mvc:view-resolvers>
-
+	<!-- 	<mvc:view-resolvers> -->
+	<!-- 		<mvc:jsp prefix="/WEB-INF/view/" /> -->
+	<!-- 	</mvc:view-resolvers> -->
+   
 </beans>

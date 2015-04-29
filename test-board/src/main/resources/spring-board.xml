@@ -21,7 +21,7 @@
 		<property name="dataSource" ref="dataSource" /> 
 	</bean>
 	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager"/> -->
 	
 	<bean id="boardDao" class="board.dao.BoardDao">
 		<constructor-arg ref="dataSource" />
@@ -34,10 +34,22 @@
 	<bean id="boardListService" class="board.service.BoardListService" >
 		<property name="boardDao" ref="boardDao" />
 	</bean>
+	<bean id="boardUpdateService" class="board.service.BoardUpdateService" >
+		<property name="boardDao" ref="boardDao" />
+	</bean>
+	<bean id="boardWriteService" class="board.service.BoardWriteService" >
+		<property name="boardDao" ref="boardDao" />
+	</bean>
+	<bean id="boardDeleteService" class="board.service.BoardDeleteService" >
+		<property name="boardDao" ref="boardDao" />
+	</bean>
 	
 	<bean id="boardController" class="board.controller.BoardController">
 		<property name="viewInterface" ref="boardViewService" />
 		<property name="listInterface" ref="boardListService" />
+		<property name="updateInterface" ref="boardUpdateService" />
+		<property name="writeInterface" ref="boardWriteService" />
+		<property name="deleteInterface" ref="boardDeleteService" />
 	</bean>
 	
 	
