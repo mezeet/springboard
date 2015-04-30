@@ -14,9 +14,19 @@
 				<put-attribute name="footer-script" value="/WEB-INF/view/template/footer-script.jsp" />
     </definition>
 
-    <definition name="Board" extends="base.definition">
-        <put-attribute name="main" value="/WEB-INF/view/board/main.jsp" />
+    <definition name="BoardList" extends="base.definition">
+        <put-attribute name="main" value="/WEB-INF/view/board/list.jsp" />
     </definition>
+    <definition name="BoardView" extends="base.definition">
+        <put-attribute name="main" value="/WEB-INF/view/board/view.jsp" />
+    </definition>
+    <definition name="BoardUpdate" extends="base.definition">
+        <put-attribute name="main" value="/WEB-INF/view/board/update.jsp" />
+    </definition>
+    <definition name="BoardWrite" extends="base.definition">
+        <put-attribute name="main" value="/WEB-INF/view/board/write.jsp" />
+    </definition>
+        
  
  <!--     <definition name="base.definition" template="/WEB-INF/view/template/layout.jsp"> -->
 <!--         <put-attribute name="header-head" value="/WEB-INF/view/template/header-head.jsp" /> -->

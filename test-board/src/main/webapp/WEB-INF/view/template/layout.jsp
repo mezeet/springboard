@@ -38,7 +38,6 @@
 		<!-- 	본문 좌측 영역 끝 -->
 		
 		<!-- 	본분 우측 영역 시작 -->
-		<c:if test="${main !='/service/member/profile.jsp' }">
 			<div class="col-sm-4  visible-md visible-lg">
 				<div class="row">
 					<div class="col-sm-11 col-sm-push-1">
@@ -46,8 +45,6 @@
 					</div>
 				</div>
 			</div>
-			
-			</c:if>
 		<!-- 	본문 우측 영역 끝 -->
 		</div>
 

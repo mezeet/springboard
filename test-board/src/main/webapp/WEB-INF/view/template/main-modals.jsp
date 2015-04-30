@@ -97,3 +97,53 @@
 	</div>
 </div>
 <!--	모달-비번찾기 끝 -->
+
+<!-- 시작 : 수정/삭제 모달   -->
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">글 수정하기</h4>
+      </div>
+  	    <div class="modal-body">
+      	  <div class="form-group">
+    	  	  <input class="form-control " type="text" placeholder="결제 사항변경 안내">
+        	</div>
+        <div class="form-group">
+        	<input class="form-control " type="text" placeholder="관리자">
+        </div>
+        <div class="form-group">
+        	<textarea rows="2" class="form-control" placeholder="결제 사항이 변동되었습니다. 착오 없도록 부탁드려요~"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> 수정완료</button>
+      </div>
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+  
+  </div>
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        
+        <h4 class="modal-title custom_align" id="Heading">이 게시글 삭제</h4>
+        
+      </div>
+  	  <div class="modal-body">
+      	<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;정말 이 기록을 삭제하길 원하는게 맞습니까?</div>
+      </div>
+      	<div class="modal-footer ">
+	        <a href="${path}/board/delete.do?no=${board.no}&table=board">
+	        <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> 네</button>
+	        </a>
+	        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 아니오</button>
+      	</div>
+      </div> <!-- /.modal-content --> 
+  </div> <!-- /.modal-dialog --> 
+</div>
+ <!-- 끝 : 수정/삭제 모달   -->

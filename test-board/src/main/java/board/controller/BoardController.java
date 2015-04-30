@@ -3,7 +3,6 @@ package board.controller;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -34,18 +33,24 @@ public class BoardController {
 	 * @param model 서비스 처리 결과를 보낼 객체
 	 * @param no 게시글 번호
 	 * @param table 조회할 대상 테이블
+	 * @param request 프로젝트 경로를 얻어올 리퀘스트 객체
 	 * @return 게시글 하나를 보여줄 jsp 페이지
+	 * @see http://stackoverflow.com/questions/8504258/spring-3-mvc-accessing-httprequest-from-controller
+	 * 
 	 */
 	@RequestMapping(value="/board/view.do")
 	public String view(Model model, @RequestParam(value="no",required=true)int no,
-																	@RequestParam(value="table",required=false) String table){
+																	@RequestParam(value="table",required=true) String table,
+																	HttpServletRequest request
+																	){
 		
 		common.util.Identify.getLocation(0);
 		Board board = new Board();
 		board = (Board)viewInterface.process(no,table);
 		model.addAttribute("board", board);
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
-		return "board/view";
+		return "BoardView";
 	}
 
 	/**
@@ -56,7 +61,9 @@ public class BoardController {
 	 * @return 목록을 보여줄 jsp 페이지
 	 */
 	@RequestMapping(value="/board/list.do")
-	public String list(Model model, @RequestParam(value="table",required=false) String table, HttpServletRequest request){
+	public String list(Model model,
+										 @RequestParam(value="table",required=false) String table,
+										 HttpServletRequest request){
 
 		common.util.Identify.getLocation(0);
 		List<Object> list = listInterface.process(table);
@@ -65,7 +72,7 @@ public class BoardController {
 		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
 		
-		return "Board";
+		return "BoardList";
 	}
 
 	
@@ -77,11 +84,14 @@ public class BoardController {
 	 * @return 게시글 수정 jsp 페이지
 	 */
 	@RequestMapping(value="/board/write.do",method=RequestMethod.GET)
-	public String write(Model model, @RequestParam(value="table",required=false) String table){
+	public String write(Model model,
+			                @RequestParam(value="table",required=false) String table,
+											HttpServletRequest request){
 		
 		common.util.Identify.getLocation(0);
 		common.util.Identify.getLocation(1);
-		return "board/write";
+		model.addAttribute("path", request.getContextPath());
+		return "BoardWrite";
 	}
 	
 	/**
@@ -97,15 +107,17 @@ public class BoardController {
 	public String write(Model model, 
 											RedirectAttributes redirectAttributes, 
 											@RequestParam(value="table",required=true)
-											String table, Board inputForm){
+											String table, Board inputForm,
+											HttpServletRequest request){
 
 		common.util.Identify.getLocation(0);
 		ResultStatus resultStatus = writeInterface.process(table, inputForm);
 		model.addAttribute("resultStatus", resultStatus);
 		redirectAttributes.addFlashAttribute("no", resultStatus.getNextNo());
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
 		
-		return "board/view";
+		return "redirect:/board/view.do?no="+resultStatus.getNextNo()+"&table="+table;
 	}
 	
 	
@@ -119,14 +131,16 @@ public class BoardController {
 	@RequestMapping(value="/board/update.do",method=RequestMethod.GET)
 	public String update(Model model,
 											 @RequestParam(value="no",required=true)int no,
-											 @RequestParam(value="table",required=false) String table){
+											 @RequestParam(value="table",required=true) String table,
+											 HttpServletRequest request){
 		
 		common.util.Identify.getLocation(0);
 		Board board = new Board();
 		board = (Board)viewInterface.process(no,table);
 		model.addAttribute("board", board);
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
-		return "board/update";
+		return "BoardUpdate";
 	}
 	
 	/**
@@ -142,16 +156,18 @@ public class BoardController {
 	public String update(Model model,
 											 RedirectAttributes redirectAttributes,
 											 @RequestParam(value="table",required=false) String table,
-											 Board formInput){
+											 Board formInput,
+											 HttpServletRequest request){
 
 		common.util.Identify.getLocation(0);
 		
 		ResultStatus resultStatus = updateInterface.process(table, formInput.getNo(),formInput);
 		model.addAttribute("resultStatus", resultStatus);
-		redirectAttributes.addFlashAttribute("no", resultStatus.getNextNo());
+//		redirectAttributes.addFlashAttribute("no", resultStatus.getNextNo());
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
 		
-		return "board/view";
+		return "redirect:/board/view.do?no="+resultStatus.getNextNo()+"&table="+table;
 	}
 	
 	/**
@@ -166,16 +182,17 @@ public class BoardController {
 	public String delete(Model model,
 											 RedirectAttributes redirectAttributes,
 											 @RequestParam(value="table",required=true) String table,
-											 @RequestParam(value="no",required=true) int no){
+											 @RequestParam(value="no",required=true) int no,
+												HttpServletRequest request){
 
 		common.util.Identify.getLocation(0);
 		
 		ResultStatus resultStatus = deleteInterface.process(table, no);
 		model.addAttribute("resultStatus", resultStatus);
-		
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
 		
-		return "board/list";
+		return "redirect:/board/list.do";
 	}
 	
 	//	2. 사용할 의존 서비스 객체를 형변환 해서 처리할 인터페이스 객체 변수 준비
