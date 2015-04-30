@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 타일 뷰 리졸버 객체 생성 후 타일 뷰를 주입 -->
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<property name="viewClass"
+		    value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+	</bean>
+	
+	<!-- 타일설정을 위한 객체 생성 및 설정 xml 파일을 읽힌다. -->
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+				id="tilesConfigurer">
+	    <property name="definitions">
+	        <list>
+	            <value>/WEB-INF/tiles-def.xml</value>
+	        </list>
+	    </property>
+	</bean>
+
+</beans>

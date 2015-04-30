@@ -3,6 +3,9 @@ package board.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,16 +52,19 @@ public class BoardController {
 	 *  게시글 목록을 조회하여 뷰로 넘긴다.
 	 * @param model 서비스 처리 결과르 보낼 객체
 	 * @param table 조회할 대상 테이블
+	 * @param request 프로젝트 경로를 얻어올 리퀘스트 객체 
 	 * @return 목록을 보여줄 jsp 페이지
 	 */
 	@RequestMapping(value="/board/list.do")
-	public String list(Model model, @RequestParam(value="table",required=false) String table){
+	public String list(Model model, @RequestParam(value="table",required=false) String table, HttpServletRequest request){
 
 		common.util.Identify.getLocation(0);
 		List<Object> list = listInterface.process(table);
 		List<Board> boardList = common.util.GenericConverter.convBoard(list);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("path", request.getContextPath());
 		common.util.Identify.getLocation(1);
+		
 		return "Board";
 	}
 
@@ -202,6 +208,5 @@ public class BoardController {
 	public void setDeleteInterface(DeleteInterface deleteInterface) {
 		this.deleteInterface = deleteInterface;
 	}
-	
-	
-}
+
+	}

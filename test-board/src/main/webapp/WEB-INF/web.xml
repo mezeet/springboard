@@ -19,6 +19,7 @@
 				classpath:spring-controller.xml
 				classpath:spring-board.xml
 				classpath:spring-tiles.xml
+				
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
