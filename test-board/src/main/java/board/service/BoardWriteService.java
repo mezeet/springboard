@@ -8,7 +8,6 @@ import board.model.Board;
 
 public class BoardWriteService implements WriteInterface{
 	
-	
 	@Override
 	public ResultStatus process(String table, Object object) {
 	

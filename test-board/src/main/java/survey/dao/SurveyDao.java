@@ -1,4 +1,4 @@
-package board.dao;
+package survey.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,27 +8,27 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import board.common.ResultStatus;
-import board.model.Board;
+import survey.common.ResultStatus;
+import survey.model.Survey;
 
-public class BoardDao {
+public class SurveyDao {
 	
 	private JdbcTemplate jdbcTemplate;
-	private Board board;
-	private List<Object> boardList;
+	private Survey survey;
+	private List<Object> surveyList;
 	ResultStatus resultStatus;
 	
-	public BoardDao(DataSource dataSource) {
+	public SurveyDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
-	public Board view(int no, String table){
+	public Survey view(int no, String table){
 		 
 		Random r = new Random();
 		common.util.Identify.getLocation(0);
-		board = new Board(no,no+"번 제목",no+"번 내용",no+"번 작성자",no+"번 작성일",r.nextInt(30));
+		survey = new Survey(no,no+"번 제목",no+"번 내용",no+"번 작성자",no+"번 작성일",r.nextInt(30));
 		common.util.Identify.getLocation(1);
-		return board;
+		return survey;
 	}
 
 	public List<Object> list(String table) {
@@ -36,20 +36,20 @@ public class BoardDao {
 		common.util.Identify.getLocation(0);
 		
 		Random r = new Random();
-		boardList= new ArrayList<Object>();
+		surveyList= new ArrayList<Object>();
 		
 		System.out.println("dddd");
 		for(int i=0; i<8; i++){
 
-			board = new Board(i,"제목"+i,"내용"+i,"작성자"+i,"작성일"+i,r.nextInt(30));
-			boardList.add(board);
+			survey = new Survey(i,"제목"+i,"내용"+i,"작성자"+i,"작성일"+i,r.nextInt(30));
+			surveyList.add(survey);
 		}
 		
 		common.util.Identify.getLocation(1);
-		return boardList;
+		return surveyList;
 	}
 	
-	public ResultStatus update(int no, String table, Board board){
+	public ResultStatus update(int no, String table, Survey survey){
 		
 		common.util.Identify.getLocation(0);
 		resultStatus = new ResultStatus();
@@ -63,7 +63,7 @@ public class BoardDao {
 		return resultStatus;
 	}
 	
-	public ResultStatus write(String table, Board board){
+	public ResultStatus write(String table, Survey survey){
 		
 		common.util.Identify.getLocation(0);
 		

@@ -15,7 +15,9 @@
 				id="tilesConfigurer">
 	    <property name="definitions">
 	        <list>
-	            <value>/WEB-INF/tiles-def.xml</value>
+	            <value>/WEB-INF/base-def.xml</value>
+	            <value>/WEB-INF/board-def.xml</value>
+	            <value>/WEB-INF/survey-def.xml</value>
 	        </list>
 	    </property>
 	</bean>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- dataSource 라는 이름으로 DBCP 객체 생성 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@211.183.7.63:1521:orcl" />
+		<property name="user" value="java21" />
+		<property name="password" value="java21" />
+	</bean>
+
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" /> 
+	</bean>
+	
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager"/> -->
+	
+	<bean id="surveyDao" class="survey.dao.SurveyDao">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+<!-- 	<bean id="surveyViewService" class="survey.service.SurveyViewService" > -->
+<!-- 		<property name="surveyDao" ref="surveyDao" /> -->
+<!-- 	</bean> -->
+	
+	<bean id="surveyListService" class="survey.service.SurveyListService" >
+		<property name="surveyDao" ref="surveyDao" />
+	</bean>
+<!-- 	<bean id="surveyUpdateService" class="survey.service.SurveyUpdateService" > -->
+<!-- 		<property name="surveyDao" ref="surveyDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="surveyWriteService" class="survey.service.SurveyWriteService" > -->
+<!-- 		<property name="surveyDao" ref="surveyDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="surveyDeleteService" class="survey.service.SurveyDeleteService" > -->
+<!-- 		<property name="surveyDao" ref="surveyDao" /> -->
+<!-- 	</bean> -->
+	
+	<bean id="surveyController" class="survey.controller.SurveyController">
+<!-- 		<property name="viewInterface" ref="surveyViewService" /> -->
+		<property name="listInterface" ref="surveyListService" />
+<!-- 		<property name="updateInterface" ref="surveyUpdateService" /> -->
+<!-- 		<property name="writeInterface" ref="surveyWriteService" /> -->
+<!-- 		<property name="deleteInterface" ref="surveyDeleteService" /> -->
+	</bean>
+	
+	
+</beans>

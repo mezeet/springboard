@@ -18,6 +18,7 @@
 				classpath:spring-mvc.xml
 				classpath:spring-controller.xml
 				classpath:spring-board.xml
+				classpath:spring-survey.xml
 				classpath:spring-tiles.xml
 				
 			</param-value>

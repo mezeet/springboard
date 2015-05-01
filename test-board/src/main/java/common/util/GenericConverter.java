@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import survey.model.Survey;
 import board.model.Board;
 
 /**
@@ -31,4 +32,22 @@ public class GenericConverter {
 		return boardList;
 	}
 
+	/**
+	 * Survey형으로 제너릭을 변환한다.
+	 * @param objList 변환할 List<Object> 객체
+	 * @return surveyList 변환된 List<Survey> 객체
+	 */
+	public static List<Survey> convSurvey(List<Object> objList){
+		
+		List<Survey> surveyList = new ArrayList<Survey>();
+		
+		Iterator<Object> it = objList.iterator();
+		
+		while(it.hasNext()){
+			 surveyList.add((Survey)it.next());
+		}
+		
+		return surveyList;
+	}
+	
 }

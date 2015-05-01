@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="SurveyList" extends="base.definition">
+        <put-attribute name="main" value="/WEB-INF/view/survey/list.jsp" />
+    </definition>
+<!--     <definition name="BoardView" extends="base.definition"> -->
+<!--         <put-attribute name="main" value="/WEB-INF/view/board/view.jsp" /> -->
+<!--     </definition> -->
+<!--     <definition name="BoardUpdate" extends="base.definition"> -->
+<!--         <put-attribute name="main" value="/WEB-INF/view/board/update.jsp" /> -->
+<!--     </definition> -->
+<!--     <definition name="BoardWrite" extends="base.definition"> -->
+<!--         <put-attribute name="main" value="/WEB-INF/view/board/write.jsp" /> -->
+<!--     </definition> -->
+
+ 
+</tiles-definitions>
