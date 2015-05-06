@@ -7,68 +7,120 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>test-board Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-    <dependency>
+    
+		<!-- 0. 스프링 웹 mvc 프로젝트를 위한 의존 설정 -->
+
+		<!--  서블릿 사용 설정-->
+	  <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- 스프링 웹 MVC 사용 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.1.0.RELEASE</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.0.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-ibatis</artifactId>
-			<version>2.0.8</version>
-		</dependency>
 		
-		<dependency>
-			<groupId>com.mchange</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.2.1</version>
+		<!--  1. 뷰 관련 설정 -->
+
+		<!--  Jstl 태그를 사용하기 위한 의존 설정 -->
+    <dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3</version>
-		</dependency>
-		<!--	파일 업로드 멀티파트 라이브러리 -->
-		<dependency>
-	    <groupId>com.jfinal</groupId>
-	    <artifactId>jfinal</artifactId>
-	    <version>1.9</version>
-		</dependency>
+
+		<!-- 타일즈 템플릿 엔진 의존 설정 -->
     <dependency>
         <groupId>org.apache.tiles</groupId>
         <artifactId>tiles-extras</artifactId>
         <version>3.0.0</version>
     </dependency>
+		
+  		<!--  3. 모델 관련 설정 -->
+  
+  	<!--  mysql 자바 커넥터 의존 설정 -->
+		<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.35</version>
+		</dependency>
+  
+  	<!--  dbcp 사용위한 의존 설정 -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.2.1</version>
+		</dependency>
+  
+    	<!--  마이바티스 의존 설정 -->
+   	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.2.8</version>
+		</dependency>
+		
+		<!--  마이바티스 스프링 연동 의존 설정 -->
     <dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	    <version>1.2.2</version>
+		</dependency>
+	
+		<!--  ibatis 사용위한 의존 설정 -->
+		<!-- <dependency> -->
+		<!-- 	<groupId>org.springframework</groupId> -->
+		<!-- 	<artifactId>spring-ibatis</artifactId> -->
+		<!-- 	<version>2.0.8</version> -->
+		<!-- </dependency> -->
+		
+		<!-- oracle 11g 연결 위한 의존 설정 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
+		
+		<!--  스프링에서 jdbc 템플릿을 사용하기 위한 의존 설정 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		
+		<!-- 4. 그외 기타 필요한 의존 설정 -->
+		
+		<!--  자바 단위 테스트를 위한 의존 설정 -->
+		<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+		 <!--	파일 업로드 멀티파트 라이브러리 -->
+		<dependency>
+	    <groupId>com.jfinal</groupId>
+	    <artifactId>jfinal</artifactId>
+	    <version>1.9</version>
+		</dependency>
+		
+		<!--  심플 facade 패턴 로그 의존 설정 -->
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.12</version>
 		</dependency>
+    
   </dependencies>
   
+	<!--  빌드 환경 설정 -->
   <build>
     <finalName>test-board</finalName>
     <plugins>
@@ -84,11 +136,12 @@
 		</plugins>
   </build>
   
-    <repositories>
-      <repository>
-      <id>codelds</id>
-      <url>https://code.lds.org/nexus/content/groups/main-repo</url>
-    </repository>
+  <repositories>
+		<!-- ojdbc6 의존을 위한 저장소 -->
+		<repository>
+		  <id>codelds</id>
+		  <url>https://code.lds.org/nexus/content/groups/main-repo</url>
+		</repository>
   </repositories>
   
 </project>
