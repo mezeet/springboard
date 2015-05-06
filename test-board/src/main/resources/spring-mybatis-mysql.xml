@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+  <!-- mybatis configuration 으로 mybatisdml dbcp 와 transaction manager 사용 가능하지만 기존 소스 그냥 활용 -->
+    
+	<!-- dataSource 라는 이름으로 DBCP 객체 생성 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/skysurvey" />
+		<property name="user" value="root" />
+		<property name="password" value="skysurvey" />
+	</bean>
+	
+	<!-- 트랜젝션매니저 설정 , 오토커밋 등을 매 번 설정하지 않아도 어노테이션으로 설정을 자동주입해준다. -->
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" /> 
+	</bean>
+	
+	<!-- 트렌젝션 매니저로 설정을 주입할 때 사용할 어노테이션 명을 "transactionManager"로 정의한다. -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- 모든 매퍼를 생성해서 리턴해주는 sql 세션 팩토리 클래스 관련 설정 -->
+	<!-- 자동 추가 value="classpath:kr/pe/theeye/dao/mapper/**/*.xml" -->
+	<bean id="sqlSessionFactory"
+	  class="org.mybatis.spring.SqlSessionFactoryBean">
+	  <property name="dataSource" ref="dataSource" />
+	  <property name="mapperLocations"
+	    value="classpath:mapper/board.xml" />
+	  <property name="configLocation" 
+	    value="WEB-INF/mybatis-config.xml" />
+	</bean>
+
+	<!-- 세션 팩토리에서 매퍼를 접근해 사용하기 위한 sql세션 객체 생성 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	  <constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	
+</beans>
