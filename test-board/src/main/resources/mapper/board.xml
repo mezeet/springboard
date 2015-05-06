@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardMapper">
+    
+   <resultMap id="result" type="Board">
+     	<result property="id" column="id"/>
+      <result property="name" column="name"/>  
+   </resultMap>
+   
+    <resultMap id="result" type="boardList">
+     	<collection property="posts" javaType="ArrayList" 
+     	    column="id" ofType="Board" select="getAll"/>  
+   </resultMap>
+   
+   
+   
+  <cache />
+	<select id="getAll" parameterType="string" resultMap="boardList">
+      
+    SELECT 
+			no,
+			title,
+			content,
+			writer,
+			wdate,
+			target
+		FROM BOARD;
+  </select>
+
+ 
+</mapper>
