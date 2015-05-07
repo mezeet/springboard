@@ -1,32 +1,44 @@
 package board.dao;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Random;
 
-import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+
+
+import org.mybatis.spring.SqlSessionTemplate;
+
 
 import board.common.ResultStatus;
 import board.model.Board;
 
 public class BoardDao {
-	
-	private JdbcTemplate jdbcTemplate;
+		
+	private SqlSessionTemplate sqlSessionTemplate;
+	private SpecParam specParam;
 	private Board board;
 	private List<Object> boardList;
 	ResultStatus resultStatus;
 	
-	public BoardDao(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	/**
+	 * sql세션 템플릿을 주입받을 수 있는 세터 메소드
+	 * @param sqlSessionTemplate 게시판 테이블에 대한 mybatis 매핑 쿼리를 가진 sql 세션 템플릿
+	 */
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate){
+		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
+	/**
+	 * sql세션 템플릿 중 특정 게시글 번호를 가진 글 하나를 조회한다.
+	 * @param no 조회할 게시글의 번호
+	 * @param table 조회할 게시판 테이블명
+	 * @return
+	 */
 	public Board view(int no, String table){
 		 
-		Random r = new Random();
 		common.util.Identify.getLocation(0);
-		board = new Board(no,no+"번 제목",no+"번 내용",no+"번 작성자",no+"번 작성일",r.nextInt(30));
+		specParam = new SpecParam(table, no);
+		board = sqlSessionTemplate.selectOne("Board.view", specParam);
 		common.util.Identify.getLocation(1);
 		return board;
 	}
@@ -34,17 +46,7 @@ public class BoardDao {
 	public List<Object> list(String table) {
 		
 		common.util.Identify.getLocation(0);
-		
-		Random r = new Random();
-		boardList= new ArrayList<Object>();
-		
-		System.out.println("dddd");
-		for(int i=0; i<8; i++){
-
-			board = new Board(i,"제목"+i,"내용"+i,"작성자"+i,"작성일"+i,r.nextInt(30));
-			boardList.add(board);
-		}
-		
+		boardList = sqlSessionTemplate.selectList("Board.list", table);
 		common.util.Identify.getLocation(1);
 		return boardList;
 	}
@@ -54,8 +56,9 @@ public class BoardDao {
 		common.util.Identify.getLocation(0);
 		resultStatus = new ResultStatus();
 		resultStatus.setStatus(-1);
-		
-		System.out.println("업데이트 완료");
+		specParam = new SpecParam(table, no, board);
+	
+		sqlSessionTemplate.update("Board.update", specParam);
 		
 		resultStatus.setStatus(1);
 		resultStatus.setNextNo(no);
@@ -66,27 +69,27 @@ public class BoardDao {
 	public ResultStatus write(String table, Board board){
 		
 		common.util.Identify.getLocation(0);
-		
-		Random r = new Random();
+	
 		resultStatus = new ResultStatus();
 		resultStatus.setStatus(-1);
 		
-		System.out.println("글 작성 완료");
-		System.out.println("새롭게 생성된 글 번호 조회");
+		specParam = new SpecParam(table, board);
 		
-		resultStatus.setNextNo(r.nextInt(30));
-		resultStatus.setStatus(1);
+		sqlSessionTemplate.insert("Board.write", specParam);
+		resultStatus.setNextNo(board.getNo());
+		
 		common.util.Identify.getLocation(1);
 		return resultStatus;
 	}
 
-	public ResultStatus delete(int no, String table){
+	public ResultStatus delete(String table, int no){
 		
 		common.util.Identify.getLocation(0);
 		resultStatus = new ResultStatus();
 		resultStatus.setStatus(-1);
 		
-		System.out.println("삭제 완료");
+		specParam = new SpecParam(table, no);
+		sqlSessionTemplate.delete("Board.delete", specParam);
 		
 		resultStatus.setStatus(1);
 		common.util.Identify.getLocation(1);
