@@ -28,6 +28,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<!-- 모든 매퍼를 생성해서 리턴해주는 sql 세션 팩토리 클래스 관련 설정 -->
+	<!-- 매퍼에서 사용할 별명을 mybatis-config.xml 에 담아 둠 -->
 	<!-- 자동 추가 value="classpath:kr/pe/theeye/dao/mapper/**/*.xml" -->
 	<bean id="sqlSessionFactory"
 	  class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -39,7 +40,7 @@
 	</bean>
 
 	<!-- 세션 팩토리에서 매퍼를 접근해 사용하기 위한 sql세션 객체 생성 -->
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
