@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="BoardMapper">
-    
-   <resultMap id="result" type="Board">
-     	<result property="id" column="id"/>
-      <result property="name" column="name"/>  
-   </resultMap>
-   
-    <resultMap id="result" type="boardList">
-     	<collection property="posts" javaType="ArrayList" 
-     	    column="id" ofType="Board" select="getAll"/>  
-   </resultMap>
-   
-   
-   
-  <cache />
-	<select id="getAll" parameterType="string" resultMap="boardList">
-      
-    SELECT 
-			no,
-			title,
-			content,
-			writer,
-			wdate,
-			target
-		FROM BOARD;
-  </select>
+<mapper namespace="Board">
 
- 
+	<select id="view" resultType="board">
+		select no,title,content,writer,wdate,target 
+		from #{table} 
+		where no = #{no}
+	</select>
+
+	<select id="list" resultType="board">
+		select * from #{table}
+	</select>
+	
+	<insert id="writeProcess">
+		insert into board(no,title,content,writer)
+		values(board_seq.nextval, #{title},#{content},#{writer})
+	</insert>
+	
+	<insert id="updateProcess">
+			<!-- 작성예정 -->
+	</insert>
+	
+	<insert id="getMaxNo">
+			<!-- 작성예정 -->
+	</insert>
+	
 </mapper>
