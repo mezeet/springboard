@@ -14,7 +14,7 @@ public class BoardDeleteService implements DeleteInterface{
 	public ResultStatus process(String table, int no) {
 	
 		common.util.Identify.getLocation(0);
-		ResultStatus resultStatus = boardDao.delete(no, table);
+		ResultStatus resultStatus = boardDao.delete(table, no);
 		common.util.Identify.getLocation(1);
 		
 		return resultStatus;
